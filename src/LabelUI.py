@@ -28,17 +28,18 @@ class LabelUI(ttk.Frame):
             ttk.Label(frm, text=field).grid(row=row, column=0, sticky='w', pady=2)
             entry = ttk.Entry(frm)
             entry.grid(row=row, column=1, sticky='ew', pady=2, ipadx=30)
+            frm.grid_columnconfigure(1, minsize=200)
             self.inputs[field] = entry
             row += 1
         # Canvas for image/label preview
-        self.canvas = tk.Canvas(frm, width=300, height=300, bg='white')
+        self.canvas = tk.Canvas(frm, width=600, height=300, bg='white')
         self.canvas.grid(row=0, column=2, rowspan=row, padx=10)
         self.contents = tk.Text(frm, height=6, width=40, wrap='word', state='disabled')
         self.contents.grid(row=row, column=2, sticky='ew', pady=10)
         show_btn = ttk.Button(frm, text="Show Bar/QR code", command=self.show_barcode)
-        show_btn.grid(row=row, column=0, columnspan=2, pady=10)
+        show_btn.grid(row=row, column=1,sticky='w', columnspan=2, pady=10)
         save_btn = ttk.Button(frm, text="Save", command=self.save)
-        save_btn.grid(row=row, column=1, columnspan=2, pady=10)
+        save_btn.grid(row=row, column=0,sticky='w', columnspan=2, pady=10)
         frm.columnconfigure(1, weight=1)
 
         sep = ttk.Separator(frm, orient='horizontal')
@@ -96,7 +97,7 @@ class LabelUI(ttk.Frame):
             codes = pdf417gen.encode(str(self.model), columns=6, security_level=2)
             pdf_img = pdf417gen.render_image(codes, scale=6, ratio=3)
             generated_img = pdf_img.convert("RGB")
-            generated_img = generated_img.resize((500, 300))  # Resize for better display
+            generated_img = generated_img.resize((600, 200))  # Resize for better display
             self.contents.config(state='normal')
             self.contents.delete('1.0', tk.END)
             self.contents.insert(tk.END, str(self.model))
@@ -138,7 +139,7 @@ class LabelUI(ttk.Frame):
             code.write(buffer)
             buffer.seek(0)
             generated_img = Image.open(buffer)
-            generated_img = generated_img.resize((480, 180))  # Resize for better display
+            generated_img = generated_img.resize((600, 600//4 ))  # Resize for better display
             self.contents.config(state='normal')
             self.contents.delete('1.0', tk.END)
             self.contents.insert(tk.END, str(self.model))
