@@ -30,6 +30,18 @@ wheels = [
 ]
 
 [[package]]
+name = "pdf417gen"
+version = "0.8.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pillow" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/92/77/d7cac091ffda16c7c6adddcb44cf5e46e2fc32f3b30b0c902b75a88f5a31/pdf417gen-0.8.1.tar.gz", hash = "sha256:0bd42ed67af5e5f681d4202de6065a359c9b43a8790ff534f5f0490b9516893d", size = 1786483, upload-time = "2025-01-23T10:30:46.377Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/91/5b/8baf6a8d7c5aa948816c960a833ce1c7cdc89823fb7b345392ad8f9b7e1e/pdf417gen-0.8.1-py3-none-any.whl", hash = "sha256:f0a3e46bc0edbf7dfbef36ae080b20380cc64fe511bb5e6300d3f53c9d57fed9", size = 25512, upload-time = "2025-01-23T10:30:43.283Z" },
+]
+
+[[package]]
 name = "pillow"
 version = "12.1.1"
 source = { registry = "https://pypi.org/simple" }
@@ -287,6 +299,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "pdf417" },
+    { name = "pdf417gen" },
     { name = "pillow" },
     { name = "pydantic" },
     { name = "python-barcode" },
@@ -296,6 +309,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "pdf417", specifier = ">=0.8.1" },
+    { name = "pdf417gen", specifier = ">=0.8.1" },
     { name = "pillow", specifier = ">=12.1.1" },
     { name = "pydantic", specifier = ">=2.12.5" },
     { name = "python-barcode", specifier = ">=0.16.1" },
