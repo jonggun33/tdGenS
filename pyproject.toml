@@ -5,10 +5,12 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
+    "openpyxl>=3.1.5",
     "pdf417>=0.8.1",
     "pdf417gen>=0.8.1",
     "pillow>=12.1.1",
     "pydantic>=2.12.5",
+    "pyperclip>=1.11.0",
     "python-barcode>=0.16.1",
     "qrcode>=8.2",
 ]

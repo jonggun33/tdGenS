@@ -13,16 +13,16 @@ class QrBar:
         self.root = root
         self.root.title("Barcode/QR Code Generator")
         self.root.geometry("900x750")
-        output_dir = "saved/"
+        saved_dir = "saved/"
         notebook = ttk.Notebook(root)
         notebook.pack(expand=True, fill="both")
-        tab_msl = LabelUI(notebook, MSLabel, file_path=output_dir + ms_file)  # Assuming LabelUI takes a model class and a file path
+        tab_msl = LabelUI(notebook, MSLabel, file_path=saved_dir + ms_file)  # Assuming LabelUI takes a model class and a file path
         notebook.add(tab_msl, text="Material Status Label")
-        tab_disp = LabelUI(notebook, DispLabel, file_path=output_dir + disp_file)
+        tab_disp = LabelUI(notebook, DispLabel, file_path=saved_dir + disp_file)
         notebook.add(tab_disp, text="Dispensing Label")
-        tab_cleaning = LabelUI(notebook, CleaningLabel, file_path=output_dir + cleaning_file)
+        tab_cleaning = LabelUI(notebook, CleaningLabel, file_path=saved_dir + cleaning_file)
         notebook.add(tab_cleaning, text="Cleaning Label")
-        tab_halb = LabelUI(notebook, HalbLabel, file_path=output_dir + halb_file)
+        tab_halb = LabelUI(notebook, HalbLabel, file_path=saved_dir + halb_file)
         notebook.add(tab_halb, text="Halb Label")
 
 

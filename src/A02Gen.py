@@ -2,9 +2,16 @@ from tkinter import ttk
 
 
 class A02Gen(ttk.Frame):
-    def __init__(self, parent):
+    def __init__(self, parent, log_callback=None):
         super().__init__(parent)
+        self.log_callback = log_callback
         self._build_ui()
+
+    def log(self, message):
+        if callable(self.log_callback):
+            self.log_callback(message)
+        else:
+            print(message)
 
     def _build_ui(self):
         frm = ttk.Frame(self)
