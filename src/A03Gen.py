@@ -30,26 +30,3 @@ class A03Gen(ttk.Frame):
         for i in range(rows):
             tree.insert('', 'end', values=[''] * len(headings))
         
-        def on_double_click(event):
-            item = tree.selection()[0]
-            col = tree.identify_column(event.x)
-            col_index = int(col[1:]) - 1
-            
-            value = tree.item(item)['values'][col_index]
-            x, y, width, height = tree.bbox(item, col)
-            
-            entry = tk.Entry(tree, width=width//7)
-            entry.place(x=x, y=y, width=width, height=height)
-            entry.insert(0, value)
-            
-            def save_edit():
-                values = list(tree.item(item)['values'])
-                values[col_index] = entry.get()
-                tree.item(item, values=values)
-                entry.destroy()
-            
-            entry.bind('<Return>', lambda e: save_edit())
-            entry.bind('<FocusOut>', lambda e: save_edit())
-            entry.focus()
-        
-        tree.bind('<Double-1>', on_double_click)

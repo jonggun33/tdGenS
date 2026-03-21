@@ -29,5 +29,6 @@ def _prettify_xml(elem):
     pretty = reparsed.toprettyxml(indent="  ")
     # Remove lines for <Data> and </Data>
     lines = pretty.splitlines()
+    lines = lines[1:]  # Skip the XML declaration
     lines = [line for line in lines if line.strip() not in ['<DataS>', '</DataS>']]
     return '\n'.join(lines)
