@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox, filedialog
 from PIL import Image, ImageTk
 from dataclasses import dataclass
 from MSLabel import MSLabel  # Assuming MSLabel is defined in MSLabel.py
@@ -16,14 +16,24 @@ class LabelUI(ttk.Frame):
         self.model_cls = model_cls
         self.model = None
         self.inputs = {}
-        self._build_ui()
         self.file_path  = file_path
+        self._build_ui()
         self.laod_csv()
 
     def _build_ui(self):
         frm = ttk.Frame(self)
         frm.pack(padx=10, pady=10, fill='x')
         row = 0
+        
+        # File section
+        ttk.Label(frm, text="CSV File:").grid(row=row, column=0, sticky='w', pady=2)
+        self.file_entry = ttk.Entry(frm )
+        self.file_entry.grid(row=row, column=1, sticky='ew', pady=2, ipadx=30)
+        self.file_entry.insert(0, self.file_path)
+        change_btn = ttk.Button(frm, text="Change", command=self.change_file)
+        change_btn.grid(row=row, column=2, sticky='w', pady=2)
+
+        row += 1
         for field in self.model_cls.__annotations__:
             ttk.Label(frm, text=field).grid(row=row, column=0, sticky='w', pady=2)
             entry = ttk.Entry(frm)
@@ -33,7 +43,7 @@ class LabelUI(ttk.Frame):
             row += 1
         # Canvas for image/label preview
         self.canvas = tk.Canvas(frm, width=600, height=300, bg='white')
-        self.canvas.grid(row=0, column=2, rowspan=row, padx=10)
+        self.canvas.grid(row=1, column=2, rowspan=(row-1), padx=10)
         self.contents = tk.Text(frm, height=6, width=40, wrap='word', state='disabled')
         self.contents.grid(row=row, column=2, sticky='ew', pady=10)
         show_btn = ttk.Button(frm, text="Show Bar/QR code", command=self.show_barcode)
@@ -182,3 +192,9 @@ class LabelUI(ttk.Frame):
                 self.tree.column(col, anchor='w')
             for row in reader:
                 self.tree.insert("", "end", values=list(row.values()))
+
+    def change_file(self):
+        new_file = self.file_entry.get()
+        self.file_path = new_file
+        self.laod_csv()
+

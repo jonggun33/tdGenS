@@ -3,42 +3,18 @@ from tkinter import ttk, messagebox
 import openpyxl
 import random
 import pyperclip
-import datetime
-import os
-import subprocess
-import csv
-from model.A03 import A03, A03Header, A03Data  # Assuming A03 is defined in model/A03.py
+from model.Header import HEADER  # Assuming Header is defined in model/Header.py
+from model.A03 import A03,  A03Data  # Assuming A03 is defined in model/A03.py
 from model.tools import json_to_xml
 from qrbar import QrBar  # Assuming QrBar is defined in qrbar.py
+from AxxGen import AxxGen  # Assuming AxxGen is defined in AxxGen.py
 
-class A03Gen(ttk.Frame):
+class A03Gen(AxxGen):
     def __init__(self, parent, log_callback=None):
-        super().__init__(parent)
-        self.log_callback = log_callback
-        self._build_ui()
-
-    def log(self, message):
-        if callable(self.log_callback):
-            self.log_callback(message)
-        else:
-            print(message)
-
-    def _build_ui(self):
-        self.a03 = None
-        frm = ttk.Frame(self)
-        frm.pack(padx=10, pady=10, fill='x')
-        ttk.Label(frm, text="Transaction ID:").grid(row=0, column=0)
-        ttk.Label(frm, text="TransferOrderNo:").grid(row=1, column=0)
-
-       # headings = ['ItemNo', 'MAT_CODE', 'CONTROL_NO', 'CTR_QTY', 'NoContainers', 'Quantity',
-       #             'UOM', 'SLOC_FROM', 'SLOC_TO','ExpiryDate']
-        bExcel = ttk.Button(frm, text="Load from Excel", command=self.load_from_excel)
-        bExcel.grid(row=2, column=0, columnspan=2, pady=10)
-        bCopy2Clipboard = ttk.Button(frm, text="Copy XML to Clipboard", command=self.copy_to_clipboard)
-        bCopy2Clipboard.grid(row=3, column=0, columnspan=2, pady=10)
+        super().__init__(parent, log_callback=log_callback)
 
     def load_from_excel(self):
-        header = A03Header()
+        header = HEADER(TransactionType="A03")
         data = []
         # Load data from excel
         wb = openpyxl.load_workbook('data.xlsx')
@@ -49,7 +25,6 @@ class A03Gen(ttk.Frame):
         TONo = str(random.randint(1000000, 9999999))
         for row in ws[ref][1:]:  # Skip header
             row_data = {cols[i]: cell.value for i, cell in enumerate(row)}
-            print(row_data.get('SELECTED', ''))  # Debug print to check SELECTED value
             if row_data.get('SELECTED', '') != 1:
                 continue  # Skip rows that are not selected:
             # Convert numeric values to strings
@@ -92,7 +67,6 @@ class A03Gen(ttk.Frame):
             cleaning_file = "cleaning_labels.csv"
             halb_file = "halb_labels.csv"
             QrBar(tk.Tk(), ms_file, disp_file, cleaning_file, halb_file).root.mainloop()
-
         except Exception as e:
             self.log(f"Error generating XML: {e}")
             messagebox.showerror("Error", f"Failed to copy XML: {e}")

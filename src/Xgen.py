@@ -3,6 +3,7 @@ from tkinter import ttk, messagebox
 import datetime
 from A03Gen import A03Gen  # Assuming A03Gen is defined in A03Gen.
 from A02Gen import A02Gen  # Assuming X02Gen is defined in X02Gen.py
+from A13Gen import A13Gen  # Assuming A13Gen is defined in A13Gen.py    
 
 class Xgen:
     def __init__(self, root):
@@ -14,7 +15,10 @@ class Xgen:
         tab_A03 = A03Gen(notebook, log_callback=self.log)  # Assuming A03Gen is defined in A03Gen.py
         notebook.add(tab_A03, text="A03 Transaction")
         tab_A02 = A02Gen(notebook, log_callback=self.log)  # Assuming A02Gen is defined in A02Gen.py
-        notebook.add(tab_A02, text="X02 Transaction")
+        notebook.add(tab_A02, text="A02 Transaction")
+        tab_A13 = A13Gen(notebook, log_callback=self.log)  # Assuming A13Gen is defined in A13Gen.py
+        notebook.add(tab_A13, text="A13 Transaction")
+
 
         # Create a log window
         self.log_frame = ttk.Frame(root)
