@@ -4,6 +4,7 @@ import datetime
 from A03Gen import A03Gen  # Assuming A03Gen is defined in A03Gen.
 from A02Gen import A02Gen  # Assuming X02Gen is defined in X02Gen.py
 from A13Gen import A13Gen  # Assuming A13Gen is defined in A13Gen.py    
+from A04Gen import A04Gen  # Assuming A04Gen is defined in A04Gen.py
 
 class Xgen:
     def __init__(self, root):
@@ -18,6 +19,8 @@ class Xgen:
         notebook.add(tab_A02, text="A02 Transaction")
         tab_A13 = A13Gen(notebook, log_callback=self.log)  # Assuming A13Gen is defined in A13Gen.py
         notebook.add(tab_A13, text="A13 Transaction")
+        tab_A04 = A04Gen(notebook, log_callback=self.log)  # Assuming A04Gen is defined in A04Gen.py
+        notebook.add(tab_A04, text="A04 Transaction")
 
 
         # Create a log window

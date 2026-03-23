@@ -15,9 +15,12 @@ def _build_xml(parent, data):
         for key, value in data.items():
             child = ET.SubElement(parent, key)
             _build_xml(child, value)
-    elif isinstance(data, list):
+    elif isinstance(data, list)  :
         for item in data:
-            child = ET.SubElement(parent, "Data")
+            if parent.tag== "DataS":
+                child = ET.SubElement(parent, "Data")
+            else:
+                child = ET.SubElement(parent, "Component")
             _build_xml(child, item)
     else:
         parent.text = str(data)
