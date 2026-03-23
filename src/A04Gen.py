@@ -4,11 +4,18 @@ from model.A04 import A04,  A04Data , Component # Assuming A04  is defined
 import openpyxl
 import pyperclip
 from model.tools import json_to_xml
-from tkinter import messagebox  
+from tkinter import messagebox, ttk  
+
 
 class A04Gen(AxxGen):
     def __init__(self, parent, log_callback=None):
         super().__init__(parent, log_callback=log_callback)
+
+    def _build_ui(self):
+        super()._build_ui()
+        self.include_to =  True
+        ttk.Checkbutton(self, text="Generate Transfer Order (A03)", variable=self.include_to).pack(pady=5)
+
 
     def load_from_excel(self):
         header = HEADER(TransactionType="A04")
@@ -65,3 +72,31 @@ class A04Gen(AxxGen):
         except Exception as e:
             self.log(f"Error generating XML: {e}")
             messagebox.showerror("Error", f"Failed to generate XML: {e}")
+        if self.include_to:
+            self.update_excel_for_a03()  # Update Excel for A03 generation
+    def update_excel_for_a03(self):
+        self.log('Updating Excel for A03 generation...')
+        try:
+            wb = openpyxl.load_workbook('data.xlsx')
+            ws = wb['A03']
+            table = ws.tables['AThree']
+            ref = table.ref
+            for row in ws[ref][1:]:  # Skip header
+                ws.cell(row=row[0].row, column=1).value = 0  # Clear SELECTED column
+
+            start_row = ws[ref][-1][-1].row + 1  # Start after the last row of the table
+            self.log(f"start_row: {start_row}")
+            for i, component in enumerate(self.a04.DataS[0].Components):  # Assuming we take components from the first PO for A03
+                row_num = start_row + i
+                ws.cell(row=row_num, column=1).value =1
+                ws.cell(row=row_num, column=2, value=component.ComponentCode)  # Assuming MaterialCode is the second column
+                ws.cell(row=row_num, column=6, value=component.Target)
+                ws.cell(row= row_num, column=9, value=component.StorageLocation)  # Assuming StorageLocation is the ninth column
+                ws.cell(row=row_num, column=7, value=component.ComponentUOM)  # Assuming ComponentUOM is the tenth column
+            new_ref = f"A1:J{start_row + len(self.a04.DataS[0].Components) - 1}"
+            print(new_ref)
+            table.ref = new_ref  # Update the table reference to include new rows
+            wb.save('data.xlsx')
+            self.log("Excel updated for A03 generation successfully!")
+        except Exception as e:
+            self.log(f"Error updating Excel for A03: {e}")

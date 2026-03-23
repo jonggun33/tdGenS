@@ -7,6 +7,7 @@ class Component(BaseModel):
     ReservationItemNo: str=Field("", description="Reservation Item Number")
     ItemNo:str=Field(default_factory=lambda: str(random.randint(1000, 9999)), description="Item Number")
     ComponentCode:str=Field("", description="Component Material Code")
+    ComponentUOM:str=Field("g", description="Component Unit of Measure")
     Target:str=Field("100.000", description="Target Location")
     StorageLocation:str=Field("D511", description="Storage Location")
     ValidDecimalPoint:str=Field("", description="Valid Decimal Point")
