@@ -1,7 +1,7 @@
 from AxxGen import AxxGen  # Assuming AxxGen is defined in AxxGen.py
-from model.Header import HEADER  # Assuming Header is defined in model/Header.py
-from model.A13 import A13,  A13Data  # Assuming A13 is defined in model/A13.py
-from model.tools import json_to_xml 
+from Header import HEADER  # Assuming Header is defined in model/Header.py
+from A13 import A13,  A13Data  # Assuming A13 is defined in model/A13.py
+from tools import json_to_xml 
 import pyperclip
 from tkinter import messagebox  
 import openpyxl

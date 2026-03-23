@@ -1,9 +1,9 @@
 from AxxGen import AxxGen  # Assuming AxxGen is defined in AxxGen.py
-from model.Header import HEADER  # Assuming Header is defined in model/Header.py
-from model.A04 import A04,  A04Data , Component # Assuming A04  is defined
+from Header import HEADER  # Assuming Header is defined in model/Header.py
+from A04 import A04,  A04Data , Component # Assuming A04  is defined
 import openpyxl
 import pyperclip
-from model.tools import json_to_xml
+from tools import json_to_xml
 from tkinter import messagebox, ttk  
 
 

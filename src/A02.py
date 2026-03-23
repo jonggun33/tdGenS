@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
-from .tools import json_to_xml
-from .Header import HEADER
+from tools import json_to_xml
+from Header import HEADER
 
 class A02Data(BaseModel):
     BatchNo: str = Field('260303999', description = "Batch Number")

@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
-from .tools import json_to_xml
-from .Header import HEADER
+from tools import json_to_xml
+from Header import HEADER
 import random
 import datetime
     

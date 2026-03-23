@@ -3,9 +3,9 @@ from tkinter import ttk, messagebox
 import openpyxl
 import random
 import pyperclip
-from model.Header import HEADER  # Assuming Header is defined in model/Header.py
-from model.A03 import A03,  A03Data  # Assuming A03 is defined in model/A03.py
-from model.tools import json_to_xml
+from Header import HEADER  # Assuming Header is defined in model/Header.py
+from A03 import A03,  A03Data  # Assuming A03 is defined in model/A03.py
+from tools import json_to_xml
 from qrbar import QrBar  # Assuming QrBar is defined in qrbar.py
 from AxxGen import AxxGen  # Assuming AxxGen is defined in AxxGen.py
 
