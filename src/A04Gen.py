@@ -5,6 +5,7 @@ import openpyxl
 import pyperclip
 from tools import json_to_xml
 from tkinter import messagebox, ttk  
+from tkinter import BooleanVar
 
 
 class A04Gen(AxxGen):
@@ -13,7 +14,7 @@ class A04Gen(AxxGen):
 
     def _build_ui(self):
         super()._build_ui()
-        self.include_to =  True
+        self.include_to =  BooleanVar()
         ttk.Checkbutton(self, text="Generate Transfer Order (A03)", variable=self.include_to).pack(pady=5)
 
 
@@ -72,7 +73,7 @@ class A04Gen(AxxGen):
         except Exception as e:
             self.log(f"Error generating XML: {e}")
             messagebox.showerror("Error", f"Failed to generate XML: {e}")
-        if self.include_to:
+        if self.include_to.get()==True:
             self.update_excel_for_a03()  # Update Excel for A03 generation
     def update_excel_for_a03(self):
         self.log('Updating Excel for A03 generation...')

@@ -14,7 +14,11 @@ class AxxGen(ttk.Frame):
             print(message)
 
     def _build_ui(self):
-        frm = ttk.Frame(self)
+        # Initialize style
+        s = ttk.Style()
+        # Create style used by default for all Frames
+        s.configure('TFrame', background='green')
+        frm = ttk.Frame(self, style='TFrame')
         frm.pack(padx=10, pady=10, fill='x')
         bExcel = ttk.Button(frm, text="Load from Excel", command=self.load_from_excel)
         bExcel.grid(row=2, column=0, columnspan=2, pady=10)

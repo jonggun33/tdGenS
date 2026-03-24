@@ -5,6 +5,7 @@ import openpyxl
 import pyperclip
 from tools import json_to_xml
 from tkinter import messagebox  
+from tkinter import ttk
 
 
 class A02Gen(AxxGen):

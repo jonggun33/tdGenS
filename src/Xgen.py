@@ -13,14 +13,14 @@ class Xgen:
         self.root.geometry("1100x500")
         notebook = ttk.Notebook(root)
         notebook.pack(expand=True, fill="both")
-        tab_A03 = A03Gen(notebook, log_callback=self.log)  # Assuming A03Gen is defined in A03Gen.py
-        notebook.add(tab_A03, text="A03 Transaction")
-        tab_A02 = A02Gen(notebook, log_callback=self.log)  # Assuming A02Gen is defined in A02Gen.py
-        notebook.add(tab_A02, text="A02 Transaction")
-        tab_A13 = A13Gen(notebook, log_callback=self.log)  # Assuming A13Gen is defined in A13Gen.py
-        notebook.add(tab_A13, text="A13 Transaction")
         tab_A04 = A04Gen(notebook, log_callback=self.log)  # Assuming A04Gen is defined in A04Gen.py
-        notebook.add(tab_A04, text="A04 Transaction")
+        notebook.add(tab_A04, text="A04 PO")
+        tab_A03 = A03Gen(notebook, log_callback=self.log)  # Assuming A03Gen is defined in A03Gen.py
+        notebook.add(tab_A03, text="A03 Transfer Order")
+        tab_A02 = A02Gen(notebook, log_callback=self.log)  # Assuming A02Gen is defined in A02Gen.py
+        notebook.add(tab_A02, text="A02 Material Batch")
+        tab_A13 = A13Gen(notebook, log_callback=self.log)  # Assuming A13Gen is defined in A13Gen.py
+        notebook.add(tab_A13, text="A13 Reservation")
 
 
         # Create a log window
