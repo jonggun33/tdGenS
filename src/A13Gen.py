@@ -1,3 +1,5 @@
+import random
+
 from AxxGen import AxxGen  # Assuming AxxGen is defined in AxxGen.py
 from Header import HEADER  # Assuming Header is defined in model/Header.py
 from A13 import A13,  A13Data  # Assuming A13 is defined in model/A13.py
@@ -19,6 +21,7 @@ class A13Gen(AxxGen):
         table = ws.tables['AThirteen']
         ref = table.ref
         cols = [cell.value for cell in ws[ref][0]]  # Get column headers
+        reservation_number = random.randint(10000000, 99999999)  # Generate random 8-digit number for ReservationNo
         for row in ws[ref][1:]:  # Skip header
             row_data = {cols[i]: cell.value for i, cell in enumerate(row)}
             if row_data.get('SELECTED', '') != 1:
@@ -28,6 +31,7 @@ class A13Gen(AxxGen):
             # Remove SELECTED column and empty values
             row_data = {k: v for k, v in row_data.items() if k != 'SELECTED' and v is not None}
             try:
+                row_data['ReservationNo'] = str(reservation_number) # Generate random 8-digit number for ReservationNo
                 a13_data = A13Data(**row_data)
                 data.append(a13_data)
                 self.log(f"Loaded: {a13_data.Material}")
