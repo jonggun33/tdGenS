@@ -60,14 +60,14 @@ class A03Gen(AxxGen):
             with open(f"saved/{csv_file}", 'w', newline='') as f:
                 f.write("mat_code,control_no,expiry,label_code\n")
                 for item in self.a03.DataS:
-                    f.write(f"{item.MaterialCode},{item.ControlNo},{item.ExpiryDate},123456789\n")
+                    f.write(f"{item.MaterialCode},{item.ControlNo},{item.ExpiryDate},{random.randint(1000000, 9999999)}\n")
             # Open the QR code generator script
             ms_file = csv_file
             disp_file = "disp_labels.csv"
             cleaning_file = "cleaning_labels.csv"
             halb_file = "halb_labels.csv"
             popup = tk.Toplevel(self.winfo_toplevel())
-            QrBar(popup, ms_file, disp_file, cleaning_file, halb_file)
+            QrBar(popup, ms_file, disp_file, cleaning_file, halb_file)  
         except Exception as e:
             self.log(f"Error generating XML: {e}")
             messagebox.showerror("Error", f"Failed to copy XML: {e}")

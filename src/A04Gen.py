@@ -1,11 +1,13 @@
-from AxxGen import AxxGen  # Assuming AxxGen is defined in AxxGen.py
-from Header import HEADER  # Assuming Header is defined in model/Header.py
-from A04 import A04,  A04Data , Component # Assuming A04  is defined
+from AxxGen import AxxGen  
+from Header import HEADER  
+from A04 import A04,  A04Data , Component 
 import openpyxl
 import pyperclip
 from tools import json_to_xml
 from tkinter import messagebox, ttk  
 from tkinter import BooleanVar
+import datetime
+import random
 
 
 class A04Gen(AxxGen):
@@ -87,14 +89,19 @@ class A04Gen(AxxGen):
 
             start_row = ws[ref][-1][-1].row + 1  # Start after the last row of the table
             self.log(f"start_row: {start_row}")
-            for i, component in enumerate(self.a04.DataS[0].Components):  # Assuming we take components from the first PO for A03
-                row_num = start_row + i
-                ws.cell(row=row_num, column=1).value =1
-                ws.cell(row=row_num, column=2, value=component.ComponentCode)  # Assuming MaterialCode is the second column
-                ws.cell(row=row_num, column=6, value=component.Target)
-                ws.cell(row= row_num, column=9, value=component.StorageLocation)  # Assuming StorageLocation is the ninth column
-                ws.cell(row=row_num, column=7, value=component.ComponentUOM)  # Assuming ComponentUOM is the tenth column
-            new_ref = f"A1:J{start_row + len(self.a04.DataS[0].Components) - 1}"
+            bags_per_ctrl = 10
+            row_num = start_row
+            for i, component in enumerate(self.a04.DataS[0].Components):  
+                ControlNo: str =  f"{datetime.datetime.now().strftime('%y%m%d')}{random.randint(1000, 9999)}"
+                for j in range(bags_per_ctrl):
+                    row_num = start_row + i*bags_per_ctrl + j
+                    ws.cell(row=row_num, column=1).value =1
+                    ws.cell(row=row_num, column=2, value=component.ComponentCode)  
+                    ws.cell(row=row_num, column=3, value=ControlNo)
+                    ws.cell(row=row_num, column=6, value=component.Target)
+                    ws.cell(row= row_num, column=9, value=component.StorageLocation)  
+                    ws.cell(row=row_num, column=7, value=component.ComponentUOM)  
+            new_ref = f"A1:J{row_num}"  # Update the reference to include new rows (assuming 10 columns)
             print(new_ref)
             table.ref = new_ref  # Update the table reference to include new rows
             wb.save('data.xlsx')
