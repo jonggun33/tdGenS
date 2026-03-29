@@ -10,6 +10,7 @@ dependencies = [
     "pdf417gen>=0.8.1",
     "pillow==11.3",
     "pydantic>=2.12.5",
+    "pyinstaller>=6.19.0",
     "pyperclip>=1.11.0",
     "python-barcode==0.15.1",
     "qrcode>=8.2",
