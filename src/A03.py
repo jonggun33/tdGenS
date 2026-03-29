@@ -5,25 +5,25 @@ import random
 import datetime
     
 class A03Data(BaseModel):
-    SourcePlant: str = Field (default = "D100", description = "Source Plant")
-    DestinationPlant: str = Field (default = "P150", description = "Destination Plant")
-    MaterialCode: str = Field('1000181', description = "Material Code")
-    ControlNo: str = Field(default_factory=lambda: f"{datetime.datetime.now().strftime('%y%m%d')}{random.randint(1000, 9999)}", description = "Control Number")
-    GRTF_Quantity: str = Field('1000.000', description = "GRFT Quantity")
-    QMNo_ofContainers: str = Field('10', description = "QM Number of Containers")
-    Quantity: str = Field('100.000', description = "Quantity")
-    UOM: str = Field('kg', description = "Unit of Measure")
-    SourceLocation: str = Field('5111', description = "Source Location")
-    TargetLocation: str = Field('D521', description = "Target Location")
-    TransferOrderNo: str = Field("", description = "Transfer Order Number")
-    TransferOrderItemNo: str = Field('1', description = "Transfer Order Item Number")
-    ExpiryDate: str = Field('20261231', description = "Expiry Date")
-    DeletionFlag: str = Field(default="", description = "Deletion Flag")
+    SourcePlant: str = Field (default = "D100")
+    DestinationPlant: str = Field (default = "P150")
+    MaterialCode: str = Field('1000181')
+    ControlNo: str = Field(default_factory=lambda: f"{datetime.datetime.now().strftime('%y%m%d')}{random.randint(1000, 9999)}")
+    GRTF_Quantity: str = Field('1000.000')
+    QMNo_ofContainers: str = Field('10')
+    Quantity: str = Field('100.000')
+    UOM: str = Field('kg')
+    SourceLocation: str = Field('5111')
+    TargetLocation: str = Field('D521')
+    TransferOrderNo: str = Field("")
+    TransferOrderItemNo: str = Field('1')
+    ExpiryDate: str = Field('20261231')
+    DeletionFlag: str = Field(default="")
 
 class A03(BaseModel):
     #TransferOrderNo: str = Field(default_factory=lambda:random.randint(1000000, 9999999), description="Transfer Order Number")
-    Header: HEADER = Field(..., description="A3 Header Information")
-    DataS: list[A03Data] = Field(..., description="List of A3 Data Records")
+    Header: HEADER = Field(...)
+    DataS: list[A03Data] = Field(...)
     def to_xml(self):
         return json_to_xml(self.model_dump(), root_name="TransactionRequest")
 

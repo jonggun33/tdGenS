@@ -162,7 +162,8 @@ class LabelUI(ttk.Frame):
         new_w = int(img_w * scale)
         new_h = int(img_h * scale)
         resized_img = generated_img.resize((new_w, new_h), Image.LANCZOS)
-        tk_img = ImageTk.PhotoImage(resized_img)
+        # Bind PhotoImage to this canvas' interpreter to avoid "pyimageX doesn't exist".
+        tk_img = ImageTk.PhotoImage(resized_img, master=self.canvas)
         self.canvas.delete("all")
         # Center the image in the canvas
         canvas_width = int(self.canvas['width'])

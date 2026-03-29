@@ -1,25 +1,25 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 import datetime
-from A03Gen import A03Gen  # Assuming A03Gen is defined in A03Gen.
-from A02Gen import A02Gen  # Assuming X02Gen is defined in X02Gen.py
-from A13Gen import A13Gen  # Assuming A13Gen is defined in A13Gen.py    
-from A04Gen import A04Gen  # Assuming A04Gen is defined in A04Gen.py
+from A03Gen import A03Gen  
+from A02Gen import A02Gen  
+from A13Gen import A13Gen  
+from A04Gen import A04Gen  
 
 class Xgen:
     def __init__(self, root):
         self.root = root
         self.root.title("XML Transaction Generator")
-        self.root.geometry("1100x500")
+        self.root.geometry("700x500")
         notebook = ttk.Notebook(root)
         notebook.pack(expand=True, fill="both")
-        tab_A04 = A04Gen(notebook, log_callback=self.log)  # Assuming A04Gen is defined in A04Gen.py
+        tab_A04 = A04Gen(notebook, log_callback=self.log)  
         notebook.add(tab_A04, text="A04 PO")
-        tab_A03 = A03Gen(notebook, log_callback=self.log)  # Assuming A03Gen is defined in A03Gen.py
+        tab_A03 = A03Gen(notebook, log_callback=self.log)  
         notebook.add(tab_A03, text="A03 Transfer Order")
-        tab_A02 = A02Gen(notebook, log_callback=self.log)  # Assuming A02Gen is defined in A02Gen.py
+        tab_A02 = A02Gen(notebook, log_callback=self.log)  
         notebook.add(tab_A02, text="A02 Material Batch")
-        tab_A13 = A13Gen(notebook, log_callback=self.log)  # Assuming A13Gen is defined in A13Gen.py
+        tab_A13 = A13Gen(notebook, log_callback=self.log)  
         notebook.add(tab_A13, text="A13 Reservation")
 
 

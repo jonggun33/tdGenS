@@ -11,7 +11,7 @@ from AxxGen import AxxGen  # Assuming AxxGen is defined in AxxGen.py
 
 class A03Gen(AxxGen):
     def __init__(self, parent, log_callback=None):
-        super().__init__(parent, log_callback=log_callback)
+        super().__init__(parent, log_callback=log_callback, color='lightgreen')
 
     def load_from_excel(self):
         header = HEADER(TransactionType="A03")
@@ -58,15 +58,16 @@ class A03Gen(AxxGen):
             #save the csv file for label generation
             csv_file = f"ms_label_{self.a03.Header.TransactionId}.csv"
             with open(f"saved/{csv_file}", 'w', newline='') as f:
-                f.write("mat_code,control_no,expiry,label_code,timestamp\n")
+                f.write("mat_code,control_no,expiry,label_code\n")
                 for item in self.a03.DataS:
-                    f.write(f"{item.MaterialCode},{item.ControlNo},{item.ExpiryDate},123456789,00000000\n")
+                    f.write(f"{item.MaterialCode},{item.ControlNo},{item.ExpiryDate},123456789\n")
             # Open the QR code generator script
             ms_file = csv_file
             disp_file = "disp_labels.csv"
             cleaning_file = "cleaning_labels.csv"
             halb_file = "halb_labels.csv"
-            QrBar(tk.Tk(), ms_file, disp_file, cleaning_file, halb_file).root.mainloop()
+            popup = tk.Toplevel(self.winfo_toplevel())
+            QrBar(popup, ms_file, disp_file, cleaning_file, halb_file)
         except Exception as e:
             self.log(f"Error generating XML: {e}")
             messagebox.showerror("Error", f"Failed to copy XML: {e}")

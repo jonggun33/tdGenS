@@ -1,11 +1,11 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk 
 from DispLabel import  DispLabel
-from LabelUI import MSLabel  # Assuming LabelUI is defined in LabelUI.py
-from LabelUI import LabelUI  # Assuming LabelUI is defined in LabelUI.py
+from LabelUI import MSLabel  
+from LabelUI import LabelUI  
 from HalbLabel import HalbLabel
 from CleaningLabel import CleaningLabel
-from MSLabel import MSLabel  # Assuming MSLabel is defined in MSLabel.py
+from MSLabel import MSLabel  
 import sys
 
 class QrBar:
@@ -16,7 +16,7 @@ class QrBar:
         saved_dir = "saved/"
         notebook = ttk.Notebook(root)
         notebook.pack(expand=True, fill="both")
-        tab_msl = LabelUI(notebook, MSLabel, file_path=saved_dir + ms_file)  # Assuming LabelUI takes a model class and a file path
+        tab_msl = LabelUI(notebook, MSLabel, file_path=saved_dir + ms_file)  
         notebook.add(tab_msl, text="Material Status Label")
         tab_disp = LabelUI(notebook, DispLabel, file_path=saved_dir + disp_file)
         notebook.add(tab_disp, text="Dispensing Label")
@@ -38,4 +38,11 @@ if __name__ == "__main__":
         disp_file = "disp_labels.csv"
         cleaning_file = "cleaning_labels.csv"
         halb_file = "halb_labels.csv"
-    QrBar(tk.Tk(), ms_file, disp_file, cleaning_file, halb_file).root.mainloop()
+    existing_root = tk._default_root
+    if existing_root is None:
+        root = tk.Tk()
+        QrBar(root, ms_file, disp_file, cleaning_file, halb_file)
+        root.mainloop()
+    else:
+        popup = tk.Toplevel(existing_root)
+        QrBar(popup, ms_file, disp_file, cleaning_file, halb_file)

@@ -10,7 +10,7 @@ import openpyxl
 
 class A13Gen(AxxGen):
     def __init__(self, parent, log_callback=None):
-        super().__init__(parent, log_callback=log_callback)
+        super().__init__(parent, log_callback=log_callback, color='lightcoral')
 
     def load_from_excel(self):
         header = HEADER(TransactionType="A13")

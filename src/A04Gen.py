@@ -9,11 +9,11 @@ from tkinter import BooleanVar
 
 
 class A04Gen(AxxGen):
-    def __init__(self, parent, log_callback=None):
-        super().__init__(parent, log_callback=log_callback)
+    def __init__(self, parent, log_callback=None, color='lightyellow'):
+        super().__init__(parent, log_callback=log_callback, color=color)
 
-    def _build_ui(self):
-        super()._build_ui()
+    def _build_ui(self, color):
+        super()._build_ui(color='lightyellow')
         self.include_to =  BooleanVar()
         ttk.Checkbutton(self, text="Generate Transfer Order (A03)", variable=self.include_to).pack(pady=5)
 

@@ -5,12 +5,11 @@ import openpyxl
 import pyperclip
 from tools import json_to_xml
 from tkinter import messagebox  
-from tkinter import ttk
 
 
 class A02Gen(AxxGen):
     def __init__(self, parent, log_callback=None):
-        super().__init__(parent, log_callback=log_callback)
+        super().__init__(parent, log_callback=log_callback, color='lightblue')
 
     def load_from_excel(self):
         header = HEADER(TransactionType="A02")
