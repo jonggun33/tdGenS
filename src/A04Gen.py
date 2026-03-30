@@ -89,18 +89,14 @@ class A04Gen(AxxGen):
 
             start_row = ws[ref][-1][-1].row + 1  # Start after the last row of the table
             self.log(f"start_row: {start_row}")
-            bags_per_ctrl = 10
             row_num = start_row
             for i, component in enumerate(self.a04.DataS[0].Components):  
-                ControlNo: str =  f"{datetime.datetime.now().strftime('%y%m%d')}{random.randint(1000, 9999)}"
-                for j in range(bags_per_ctrl):
-                    row_num = start_row + i*bags_per_ctrl + j
-                    ws.cell(row=row_num, column=1).value =1
-                    ws.cell(row=row_num, column=2, value=component.ComponentCode)  
-                    ws.cell(row=row_num, column=3, value=ControlNo)
-                    ws.cell(row=row_num, column=6, value=component.Target)
-                    ws.cell(row= row_num, column=9, value=component.StorageLocation)  
-                    ws.cell(row=row_num, column=7, value=component.ComponentUOM)  
+                row_num = start_row + i
+                ws.cell(row=row_num, column=1).value =1
+                ws.cell(row=row_num, column=2, value=component.ComponentCode)  
+                ws.cell(row=row_num, column=6, value=component.Target)
+                ws.cell(row= row_num, column=9, value=component.StorageLocation)  
+                ws.cell(row=row_num, column=7, value=component.ComponentUOM)  
             new_ref = f"A1:J{row_num}"  # Update the reference to include new rows (assuming 10 columns)
             print(new_ref)
             table.ref = new_ref  # Update the table reference to include new rows

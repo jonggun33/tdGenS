@@ -59,8 +59,10 @@ class A03Gen(AxxGen):
             csv_file = f"ms_label_{self.a03.Header.TransactionId}.csv"
             with open(f"saved/{csv_file}", 'w', newline='') as f:
                 f.write("mat_code,control_no,expiry,label_code\n")
+                bags_per_ctrl = 10
                 for item in self.a03.DataS:
-                    f.write(f"{item.MaterialCode},{item.ControlNo},{item.ExpiryDate},{random.randint(1000000, 9999999)}\n")
+                    for j in range(bags_per_ctrl):
+                        f.write(f"{item.MaterialCode},{item.ControlNo},{item.ExpiryDate},{random.randint(1000000, 9999999)}\n")
             # Open the QR code generator script
             ms_file = csv_file
             disp_file = "disp_labels.csv"
