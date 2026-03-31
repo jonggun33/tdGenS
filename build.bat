@@ -6,17 +6,6 @@ set VENV=.venv\Scripts
 set PYTHON=%VENV%\python.exe
 set PIP=%VENV%\pip.exe
 
-echo === Checking PyInstaller ===
-%PYTHON% -m pip show pyinstaller >nul 2>&1
-if errorlevel 1 (
-    echo Installing PyInstaller...
-    uv pip install pyinstaller
-    if errorlevel 1 (
-        echo ERROR: Failed to install PyInstaller.
-        exit /b 1
-    )
-)
-
 echo === Building XGen executable ===
 %PYTHON% -m PyInstaller ^
     --name XGen ^
