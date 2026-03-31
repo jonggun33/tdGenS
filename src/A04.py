@@ -2,6 +2,7 @@ from pydantic import BaseModel, Field
 from tools import json_to_xml
 from Header import HEADER
 import random
+import datetime
 
 class Component(BaseModel):
     ReservationItemNo: str=Field("")
@@ -20,10 +21,10 @@ class A04Data(BaseModel):
     ProductionQuantity: str=Field("100.000")
     ProductUOM: str=Field("L", description="Unit of Measure")
     BatchNo: str=Field(default_factory=lambda: str(random.randint(100000, 999999)))
-    BatchStartDateTime: str=Field("20260901000000")
-    BatchEndDateTime: str=Field("20260930235959")
-    OperationStartDateTime: str=Field("20260901000000")
-    OperationEndDateTime: str=Field("20260930235959")
+    BatchStartDateTime: str = Field(default_factory=lambda: f"{datetime.datetime.now().strftime('%y%m%d')}000000")  
+    BatchEndDateTime: str=Field(default_factory=lambda: f"{datetime.datetime.now().strftime('%y%m%d')}235959")
+    OperationStartDateTime: str=Field(default_factory=lambda: f"{datetime.datetime.now().strftime('%y%m%d')}000000")
+    OperationEndDateTime: str=Field(default_factory=lambda: f"{datetime.datetime.now().strftime('%y%m%d')}235959")
     BOMAlternativeNo: str=Field("11")
     ReservationNo: str=Field(default_factory=lambda: str(random.randint(1000000, 9999999)))
     OperationNo: str=Field(default_factory=lambda: str(random.randint(1000, 9999)))
