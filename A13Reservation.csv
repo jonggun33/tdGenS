@@ -1,0 +1,3 @@
+﻿SELECTED,ReservationItem,Material,Quantity,UOM,WBS,CostCenter,StorageLocation,ControlNo,DateReservation,GoodsRecipient,DeletionFlag
+1,1,1001355,20,KG,100100,DS2000D,D511,2603031234,20260404,a.b,X
+1,2,1000181,20,KG,100100,DS2000D,D511,2603031234,20260404,a.b,X

@@ -1,0 +1,2 @@
+﻿SELECTED,ProductionOrderNo,ProductionQuantity,ProductUOM,BatchNo,BatchStartDateTime,BatchEndDateTime,BOMAlternativeNo,ReservationNo,OperationNo,OperationDescription,MBRDocumentNo
+1,,1000,L,,,,,,,,A5OAM01

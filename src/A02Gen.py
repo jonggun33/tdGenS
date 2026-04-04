@@ -12,30 +12,29 @@ class A02Gen(AxxGen):
         super().__init__(parent, log_callback=log_callback, color='lightblue')
 
     def load_from_excel(self):
+        import csv
         header = HEADER(TransactionType="A02")
         data = []
-        # Load data from excel
-        wb = openpyxl.load_workbook('data.xlsx')
-        ws = wb['A02']
-        table = ws.tables['ATwo']
-        ref = table.ref
-        cols = [cell.value for cell in ws[ref][0]]  # Get column headers
-        for row in ws[ref][1:]:  # Skip header
-            row_data = {cols[i]: cell.value for i, cell in enumerate(row)}
-            if row_data.get('SELECTED', '') != 1:
-                continue  # Skip rows that are not selected:
-            # Convert numeric values to strings
-            row_data = {k: str(v) if isinstance(v, (int, float)) else v for k, v in row_data.items()}
-            # Remove SELECTED column and empty values
-            row_data = {k: v for k, v in row_data.items() if k != 'SELECTED' and v is not None}
-            try:
-                a02_data = A02Data(**row_data)
-                data.append(a02_data)
-                self.log(f"Loaded: {a02_data.MaterialCode}")
-            except Exception as e:
-                self.log(f"Error loading row: {e}")
-        self.a02 = A02(Header=header, DataS=data)
-        self.log(f"Data loaded from Excel successfully! ({len(data)} records)")     
+        try:
+            with open('A02Batch.csv', newline='', encoding='utf-8') as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    self.log(f"Processing row: {row}")
+                    # Only process rows where SELECTED is '1' (as string or int)
+                    if str(row.get('SELECTED', '')).strip() != '1':
+                        continue
+                    # Remove SELECTED and empty values
+                    row_data = {k: v for k, v in row.items() if k != 'SELECTED' and v not in (None, '', ' ')}
+                    try:
+                        a02_data = A02Data(**row_data)
+                        data.append(a02_data)
+                        self.log(f"Loaded: {a02_data.MaterialCode}")
+                    except Exception as e:
+                        self.log(f"Error loading row: {e}")
+            self.a02 = A02(Header=header, DataS=data)
+            self.log(f"Data loaded from CSV successfully! ({len(data)} records)")
+        except Exception as e:
+            self.log(f"Error reading CSV: {e}")
     def copy_to_clipboard(self):
         if self.a02 is None:
             self.log("Error: No A02 data loaded. Please load from Excel first.")
