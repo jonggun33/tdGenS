@@ -14,33 +14,32 @@ class A03Gen(AxxGen):
         super().__init__(parent, log_callback=log_callback, color='lightgreen')
 
     def load_from_excel(self):
+        import csv
         header = HEADER(TransactionType="A03")
         data = []
-        # Load data from excel
-        wb = openpyxl.load_workbook('data.xlsx')
-        ws = wb['A03']
-        table = ws.tables['AThree']
-        ref = table.ref
-        cols = [cell.value for cell in ws[ref][0]]  # Get column headers
         TONo = str(random.randint(1000000, 9999999))
-        for row in ws[ref][1:]:  # Skip header
-            row_data = {cols[i]: cell.value for i, cell in enumerate(row)}
-            if row_data.get('SELECTED', '') != 1:
-                continue  # Skip rows that are not selected:
-            # Convert numeric values to strings
-            row_data = {k: str(v) if isinstance(v, (int, float)) else v for k, v in row_data.items()}
-            # Remove SELECTED column and empty values
-            row_data = {k: v for k, v in row_data.items() if k != 'SELECTED' and v is not None}
-            row_data['TransferOrderNo'] = TONo
-            row_data['TransferOrderItemNo']= str(row[0].row - 1)  # Assuming ItemNo is the first column and starts from 1
-            try:
-                a03_data = A03Data(**row_data)
-                data.append(a03_data)
-                self.log(f"Loaded: {a03_data.MaterialCode}")
-            except Exception as e:
-                self.log(f"Error loading row: {e}")
-        self.a03 = A03(Header=header, DataS=data) 
-        self.log(f"Data loaded from Excel successfully! ({len(data)} records)")
+        try:
+            with open('A03TO.csv', newline='', encoding='utf-8-sig') as csvfile:
+                reader = csv.DictReader(csvfile)
+                for idx, row in enumerate(reader, start=1):
+                    # Handle BOM in SELECTED column
+                    selected_key = 'SELECTED'
+                    if str(row.get(selected_key, '')).strip() != '1':
+                        continue
+                    # Remove SELECTED and empty values (handle BOM in key)
+                    row_data = {k: v for k, v in row.items() if k.lstrip('\ufeff') != 'SELECTED' and v not in (None, '', ' ')}
+                    row_data['TransferOrderNo'] = TONo
+                    row_data['TransferOrderItemNo'] = str(idx)
+                    try:
+                        a03_data = A03Data(**row_data)
+                        data.append(a03_data)
+                        self.log(f"Loaded: {a03_data.MaterialCode}")
+                    except Exception as e:
+                        self.log(f"Error loading row: {e}")
+            self.a03 = A03(Header=header, DataS=data)
+            self.log(f"Data loaded from CSV successfully! ({len(data)} records)")
+        except Exception as e:
+            self.log(f"Error reading CSV: {e}")
 
 
     def copy_to_clipboard(self):

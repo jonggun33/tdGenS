@@ -16,14 +16,12 @@ class A02Gen(AxxGen):
         header = HEADER(TransactionType="A02")
         data = []
         try:
-            with open('A02Batch.csv', newline='', encoding='utf-8') as csvfile:
+            with open('A02Batch.csv', newline='', encoding='utf-8-sig') as csvfile:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
-                    self.log(f"Processing row: {row}")
-                    # Only process rows where SELECTED is '1' (as string or int)
                     if str(row.get('SELECTED', '')).strip() != '1':
                         continue
-                    # Remove SELECTED and empty values
+                    self.log(f"Processing row: {row}")
                     row_data = {k: v for k, v in row.items() if k != 'SELECTED' and v not in (None, '', ' ')}
                     try:
                         a02_data = A02Data(**row_data)

@@ -1,8 +1,7 @@
 ﻿SELECTED,MaterialCode,ControlNo,GRTF_Quantity,QMNo_ofContainers,Quantity,UOM,SourceLocation,TargetLocation,ExpiryDate
 0,1000181,,,,100,g,5111,D511,
+0,1000121,2603299855,,,200,g,,D511,
 0,1000181,,,,100,g,,D511,
-0,1000181,,,,200,g,,D511,
-0,1000181,,,,100,g,,D511,
-0,1000181,,,,200,g,,D511,
+0,1000121,,,,200,g,,D511,
 1,1000181,,,,100,g,,D511,
 1,1000181,,,,200,g,,D511,

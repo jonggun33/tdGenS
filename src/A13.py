@@ -13,8 +13,8 @@ class A13Data(BaseModel):
     StorageLocation: str = Field('')   
     ControlNo: str = Field('')
     DateReservation: str = Field('20260404')
-    GoodsRecipient: str = Field('abd.def')
-    DeletionFlag: str = Field("X")
+    GoodsReceipient: str = Field('abd.def')
+    DeletionFlag: str = Field("")
 
 class A13(BaseModel):
     Header: HEADER = Field(...)
